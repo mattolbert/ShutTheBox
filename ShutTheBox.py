@@ -1,10 +1,9 @@
 import random
 from itertools import combinations
 
-nums = list(range(1, 13))
+nums = list(range(1, 10))
 print(nums)
 
-#determine if any combo of remaining numbers adds up to the dice roll. To be fair, I ended up googling how to do this, I don't know if I could have figured out a way to do it on my own but curious what you guys think.
 def does_it_add_up(nums, target_num):
   for r in range(1, len(nums) + 1):
     for combo in combinations(nums, r):
@@ -13,10 +12,20 @@ def does_it_add_up(nums, target_num):
   return False
 
 while nums:
-  die1 = random.randint(1, 6)
-  die2 = random.randint(1, 6)
-  rollvalue = die1 + die2
-  #changes the word "a" to "an" in cases of rolling 8 or 11, for grammatical effect
+  if 7 not in nums and 8 not in nums and 9 not in nums:
+    dice_choice = input("Would you like to roll 1 die or 2? ")
+    if dice_choice == "1":
+      rollvalue = random.randint(1, 6)
+    else:
+      die1 = random.randint(1, 6)
+      die2 = random.randint(1, 6)
+      rollvalue = die1 + die2
+  else: #i understand that this is not super elegant, I do want to try to simplify it, prob no need to have the same block twice in a row here
+    die1 = random.randint(1, 6)
+    die2 = random.randint(1, 6)
+    rollvalue = die1 + die2
+    
+  
   if rollvalue == 8 or rollvalue == 11:
     print("You rolled an " + str(rollvalue))
   else:
@@ -25,9 +34,10 @@ while nums:
   if does_it_add_up(nums, rollvalue):
     if_valid = False
     while if_valid == False:
-      choice = input("Pick number to remove, separated by commas:")
+      choice = input("Pick number(s) to remove, separated by commas:")
       choicelist = [i.strip() for i in choice.split(',')] 
     
+      #need to update this following Dalys comment
       choicemath = 0
       for i in choicelist:
         choicemath += int(i)
@@ -37,17 +47,18 @@ while nums:
           nums.remove(int(i))
           if_valid = True
         else:
-          print("Try again")
-      
+          print("Try again") #will update these error messages to make them clearer
+    print(nums)    
   else:
     score = ""
     for i in nums:
       score += str(i)
-    print("You lost. Great game though! Your final score was " + (f"{int(score):,}")) #i looked up online how to format this to add commas into the score value, I don't really understand it.
+    print(f"You lost. Good job, good effort! Your score was {int(score):,}")
     break 
-    
-  
-  print(nums)
+
+else:
+  print("You won! You shut the box!") #i did shut the box once but this didn't appear so I need to find a way to troubleshoot that
+
 
 
 
