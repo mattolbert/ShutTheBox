@@ -23,26 +23,31 @@ while nums:
     print("You rolled a " + str(rollvalue))
 
   if does_it_add_up(nums, rollvalue):
-    choice = input("Pick number to remove, separated by commas:")
-    choicelist = [i.strip() for i in choice.split(',')]
-
-    choicemath = 0
-    for i in choicelist:
-      choicemath += int(i)
-
-    if choicemath == rollvalue:
+    if_valid = False
+    while if_valid == False:
+      choice = input("Pick number to remove, separated by commas:")
+      choicelist = [i.strip() for i in choice.split(',')] 
+    
+      choicemath = 0
       for i in choicelist:
-        if int(i) in nums:
+        choicemath += int(i)
+      
+      for i in choicelist:
+        if choicemath == rollvalue and int(i) in nums:
           nums.remove(int(i))
-    else:
-      print("Try again")
+          if_valid = True
+        else:
+          print("Try again")
       
   else:
     score = ""
     for i in nums:
       score += str(i)
-    print("You lost! Your score was " + (f"{int(score):,}")) #i looked up online how to format this to add commas into the score value, I don't really understand it.
+    print("You lost. Great game though! Your final score was " + (f"{int(score):,}")) #i looked up online how to format this to add commas into the score value, I don't really understand it.
     break 
     
   
   print(nums)
+
+
+
