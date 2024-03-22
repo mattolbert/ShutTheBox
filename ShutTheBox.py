@@ -11,19 +11,20 @@ def does_it_add_up(nums, target_num):
         return True
   return False
 
+def roll_die(num_dice):
+    if num_dice == 1:
+      return random.randint(1, 6)
+    elif num_dice == 2:
+      die1 = random.randint(1, 6)
+      die2 = random.randint(1, 6)
+      return die1 + die2
+
 while nums:
   if 7 not in nums and 8 not in nums and 9 not in nums:
     dice_choice = input("Would you like to roll 1 die or 2? ")
-    if dice_choice == "1":
-      rollvalue = random.randint(1, 6)
-    else:
-      die1 = random.randint(1, 6)
-      die2 = random.randint(1, 6)
-      rollvalue = die1 + die2
-  else: #i understand that this is not super elegant, I do want to try to simplify it, prob no need to have the same block twice in a row here
-    die1 = random.randint(1, 6)
-    die2 = random.randint(1, 6)
-    rollvalue = die1 + die2
+    rollvalue = roll_die(dice_choice)
+  else:
+    rollvalue = roll_die(2)
     
   
   if rollvalue == 8 or rollvalue == 11:
