@@ -26,11 +26,10 @@ while nums:
   else:
     rollvalue = roll_die(2)
     
-  
-  if rollvalue == 8 or rollvalue == 11:
-    print("You rolled an " + str(rollvalue))
+  if rollvalue in [8,11]:
+    print(f"You rolled an {rollvalue}")
   else:
-    print("You rolled a " + str(rollvalue))
+    print(f"You rolled a {rollvalue}")
 
   if does_it_add_up(nums, rollvalue):
     if_valid = False
@@ -38,18 +37,23 @@ while nums:
       choice = input("Pick number(s) to remove, separated by commas:")
       choicelist = [i.strip() for i in choice.split(',')] 
     
-      #need to update this following Dalys comment
       choicemath = 0
       for i in choicelist:
         choicemath += int(i)
       
-      for i in choicelist:
-        if choicemath == rollvalue and int(i) in nums:
-          nums.remove(int(i))
+      if choicemath == rollvalue: #WHY IS THIS WHOLE CHUNK NOT WORKING
+        for i in choicelist:
+          if i not in nums:
+            print("Your number choice has already been put down")
+            break
+        
+          nums.remove(i)
           if_valid = True
-        else:
-          print("Try again") #will update these error messages to make them clearer
+      else:
+        print("Your choice doesn't match the roll value")
+
     print(nums)    
+
   else:
     score = ""
     for i in nums:
