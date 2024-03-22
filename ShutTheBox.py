@@ -12,19 +12,23 @@ def does_it_add_up(nums, target_num):
   return False
 
 def roll_die(num_dice):
-    if num_dice == 1:
-      return random.randint(1, 6)
-    elif num_dice == 2:
-      die1 = random.randint(1, 6)
-      die2 = random.randint(1, 6)
-      return die1 + die2
+  if num_dice == '1':
+    rollval = random.randint(1, 6)
+  elif num_dice == '2':
+    die1 = random.randint(1, 6)
+    die2 = random.randint(1, 6)
+    rollval = die1 + die2
+  return rollval
+
+def has_duplicates(seq):#i built this because I accidentally typed "1, 1" in as user input and it did all sort of weirdness, I think this fixed it
+  return len(seq) != len(set(seq))
 
 while nums:
   if 7 not in nums and 8 not in nums and 9 not in nums:
     dice_choice = input("Would you like to roll 1 die or 2? ")
     rollvalue = roll_die(dice_choice)
   else:
-    rollvalue = roll_die(2)
+    rollvalue = roll_die('2')
     
   if rollvalue in [8,11]:
     print(f"You rolled an {rollvalue}")
@@ -36,19 +40,20 @@ while nums:
     while if_valid == False:
       choice = input("Pick number(s) to remove, separated by commas:")
       choicelist = [i.strip() for i in choice.split(',')] 
-    
-      choicemath = 0
-      for i in choicelist:
-        choicemath += int(i)
+      intlist = [int(i) for i in choicelist]#can this and the line above it all happen at once?
+      choicemath = sum(intlist)
       
-      if choicemath == rollvalue: #WHY IS THIS WHOLE CHUNK NOT WORKING
-        for i in choicelist:
-          if i not in nums:
-            print("Your number choice has already been put down")
-            break
-        
-          nums.remove(i)
-          if_valid = True
+      if choicemath == rollvalue:
+        if has_duplicates(intlist) == True:
+          print("You can't put the same number down twice")
+          break
+        else:
+          for i in intlist:
+            if i not in nums:
+              print("Your number choice has already been put down")
+              break       
+            nums.remove(i)
+            if_valid = True
       else:
         print("Your choice doesn't match the roll value")
 
@@ -62,7 +67,7 @@ while nums:
     break 
 
 else:
-  print("You won! You shut the box!") #i did shut the box once but this didn't appear so I need to find a way to troubleshoot that
+  print("You won! You shut the box!")
 
 
 
