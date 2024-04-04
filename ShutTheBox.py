@@ -25,8 +25,8 @@ def has_duplicates(seq):
 
 while nums:
   if 7 not in nums and 8 not in nums and 9 not in nums:
-    dice_choice = input("Would you like to roll 1 die or 2? ")
-    rollvalue = roll_die(dice_choice)
+    # dice_choice = input("Would you like to roll 1 die or 2? ")
+    rollvalue = roll_die('1')
   else:
     rollvalue = roll_die('2')
     
@@ -38,26 +38,31 @@ while nums:
   if does_it_add_up(nums, rollvalue):
     if_valid = False
     while if_valid == False:
-      choice = input("Pick number(s) to remove, separated by commas:")
-      choicelist = [int(i.strip()) for i in choice.split(',')] 
-      choicemath = sum(choicelist)
-      
-      #Ensure the user input adds up to/matches the rolled dice value
-      if choicemath != rollvalue:
-        print("Your choice doesn't match the roll value")
-      #Ensure the user didn't type the same number in twice
-      elif has_duplicates(choicelist) == True:
-        print("You can't put the same number down twice")
+      #if the number of the roll value is still available, put that number down automatically
+      if rollvalue in nums:
+        nums.remove(rollvalue)
+        if_valid = True
       else:
-        # Ensure all requested tiles are still up
-        any_nums_down_already = any(i not in nums for i in choicelist)
-        if any_nums_down_already:
-            print("Your number choice has already been put down")
+        choice = input("Pick number(s) to remove, separated by commas:")
+        choicelist = [int(i.strip()) for i in choice.split(',')] 
+        choicemath = sum(choicelist)
+      
+        #Ensure the user input adds up to/matches the rolled dice value
+        if choicemath != rollvalue:
+          print("Your choice doesn't match the roll value")
+        #Ensure the user didn't type the same number in twice
+        elif has_duplicates(choicelist) == True:
+          print("You can't put the same number down twice")
         else:
-          #Good inputs. Knock down tiles
-          for i in choicelist:
-            nums.remove(i)
-          if_valid = True
+          # Ensure all requested tiles are still up
+          any_nums_down_already = any(i not in nums for i in choicelist)
+          if any_nums_down_already:
+              print("Your number choice has already been put down")
+          else:
+            #Good inputs. Knock down tiles
+            for i in choicelist:
+              nums.remove(i)
+            if_valid = True
 
     print(nums)    
 
