@@ -96,7 +96,7 @@ while counter < how_many_plays:
       for i in nums:
         stringscore += str(i)
       if player == 1:
-        print(f"You lost. Good job, good effort! There will come a day when you will successfully shut the box.... BUT IT IS NOT THIS DAY!\nYour score was {int(score):,}.")
+        print(f"You lost. Good job, good effort! There will come a day when you will successfully shut the box.... BUT IT IS NOT THIS DAY!\nYour score was {int(stringscore):,}.")
       break
 
   else:
