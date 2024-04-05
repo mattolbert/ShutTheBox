@@ -9,6 +9,8 @@ if player == 2:
 
 counter = 0
 stringscore_list = []
+losing_streak_counter = 0
+losing_streak_list = []
 while counter < how_many_plays:
   nums = list(range(1, 10))
   if player == 1:
@@ -95,12 +97,15 @@ while counter < how_many_plays:
       stringscore = ""
       for i in nums:
         stringscore += str(i)
+      losing_streak_counter += 1
       if player == 1:
         print(f"You lost. Good job, good effort! There will come a day when you will successfully shut the box.... BUT IT IS NOT THIS DAY!\nYour score was {int(stringscore):,}.")
       break
 
   else:
     stringscore = '0'
+    losing_streak_list.append(losing_streak_counter)
+    losing_streak_counter = 0
     if player == 1:
       print("You won! You shut the box!")
       
@@ -112,14 +117,13 @@ while counter < how_many_plays:
 if player == 2:
   print(score_list)
   wins = score_list.count(0)
-  print(f"You played {counter} times and shut the box {wins} times! That's a win rate of {round((wins/counter*100), 2)}%.")
+  print(f"You played {counter} times and shut the box {wins} times! That's a win rate of {round((wins/counter*100), 2)} %.")
   max_bad_score = score_list.count(max(score_list))
   if max_bad_score > 1:
     print(f"Your worst score was {max(score_list)} and you actually got that score {max_bad_score} times. Yikes!")
   else:
     print(f"Your worst score was {max(score_list)}. Yikes!")
-  if max(score_list) == 13456789:
-    print("Rolling snake eyes TWICE to start the game?! Ouch!")
+  print(f"Your longest stretch between wins was {max(losing_streak_list)} games and your shortest stretch was {min(losing_streak_list)}.")
   
 
 
