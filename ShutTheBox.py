@@ -96,6 +96,8 @@ while counter < 10:
   counter += 1
   score_list.append(score)
 print(score_list)
+wins = score_list.count(0)
+print(f"You played {counter} times and shut the box {wins} times! That's a win rate of {int(wins/counter*100)}%.")
   
 
 
